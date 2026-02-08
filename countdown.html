@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Something Special ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+    text-align: center;
+  }
+
+  .container {
+    padding: 30px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.1);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+    width: 90%;
+    max-width: 360px;
+  }
+
+  h2 {
+    margin-bottom: 15px;
+  }
+
+  .timer {
+    font-size: 30px;
+    font-weight: bold;
+    letter-spacing: 2px;
+  }
+
+  .ms {
+    font-size: 18px;
+    opacity: 0.8;
+  }
+
+  /* Heart animation */
+  .heart-box {
+    margin-top: 25px;
+    display: block;
+  }
+
+  .heart {
+    width: 50px;
+    height: 50px;
+    background: red;
+    position: relative;
+    margin: 20px auto;
+    transform: rotate(-45deg);
+    animation: beat 1s infinite;
+  }
+
+  .heart::before,
+  .heart::after {
+    content: "";
+    width: 50px;
+    height: 50px;
+    background: red;
+    border-radius: 50%;
+    position: absolute;
+  }
+
+  .heart::before {
+    top: -25px;
+    left: 0;
+  }
+
+  .heart::after {
+    left: 25px;
+    top: 0;
+  }
+
+  @keyframes beat {
+    0% { transform: scale(1) rotate(-45deg); }
+    50% { transform: scale(1.1) rotate(-45deg); }
+    100% { transform: scale(1) rotate(-45deg); }
+  }
+
+  .arrow {
+    width: 80px;
+    height: 2px;
+    background: white;
+    margin: auto;
+    position: relative;
+  }
+
+  .arrow::after {
+    content: "";
+    position: absolute;
+    right: -8px;
+    top: -4px;
+    border-left: 8px solid white;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+  }
+
+  .odia {
+    margin-top: 10px;
+    font-size: 18px;
+    color: #ffd1dc;
+  }
+
+  /* Button after timer */
+  .open-box {
+    display: none;
+    margin-top: 25px;
+  }
+
+  button {
+    padding: 12px 26px;
+    border: none;
+    border-radius: 30px;
+    background: #ff4b6e;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    animation: pulse 1.5s infinite;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h2>⏳ A Special Moment Is Coming</h2>
+
+  <div class="timer">
+    <span id="time">00 : 00 : 00</span>
+    <span class="ms" id="ms">000</span>
+  </div>
+
+  <!-- Shown while timer is running -->
+  <div class="heart-box" id="runningBox">
+    <div class="arrow"></div>
+    <div class="heart"></div>
+    <div class="odia">କାହିଁକି ଏତେ ବେସ୍ତ ହେଉଛ?</div>
+  </div>
+
+  <!-- Shown after timer ends -->
+  <div class="open-box" id="openBox">
+    <button onclick="openSurprise()">Click to Open 💝</button>
+  </div>
+</div>
+
+<script>
+  // Target: 10 Feb 12:00 AM IST
+  const target = new Date("2026-02-10T00:00:00+05:30").getTime();
+
+  const timeEl = document.getElementById("time");
+  const msEl = document.getElementById("ms");
+  const runningBox = document.getElementById("runningBox");
+  const openBox = document.getElementById("openBox");
+
+  const timer = setInterval(() => {
+    const now = new Date().getTime();
+    let diff = target - now;
+
+    if (diff <= 0) {
+      clearInterval(timer);
+      timeEl.innerHTML = "00 : 00 : 00";
+      msEl.innerHTML = "000";
+
+      runningBox.style.display = "none";
+      openBox.style.display = "block";
+      return;
+    }
+
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+    const ms = diff % 1000;
+
+    timeEl.innerHTML =
+      String(hours).padStart(2,"0") + " : " +
+      String(minutes).padStart(2,"0") + " : " +
+      String(seconds).padStart(2,"0");
+
+    msEl.innerHTML = String(ms).padStart(3,"0");
+
+  }, 30);
+
+  function openSurprise() {
+    window.location.href = "birthdayindex.html";
+  }
+</script>
+
+</body>
+</html>
